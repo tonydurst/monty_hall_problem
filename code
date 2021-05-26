@@ -1,0 +1,146 @@
+import random
+
+"""
+This program simulates and solves the famous Monty Hall problem
+the_problem():  Sets up the problem by explaining the fictional game and the contestants dilemma
+number_trials():  Asks the user for the number of trials to run in order to simulate outcomes to the problem
+keep_door():  Simulation scenario where the contestant does not change their door choice
+keep_results():  The results of the keep door simulation
+switch_door():  Simulation scenario where the contestant does change their door choice
+switch_results():  The results of the switch door simulation and the difference between the two simulations
+"""
+
+def main():
+    the_problem()
+    trials = number_trials()
+    kept = keep_door(trials)
+    keep_results(kept, trials)
+    switched = switch_door(trials)
+    switch_results(kept, switched, trials)
+
+def the_problem():
+    """
+    This function merely prints out some text to explain the Monty Hall problem
+    and to let the user know that the program will simulate the choice between
+    keeping the door originally chosen and switching after Monty reveals a door 
+    that concealed a goat
+    """
+    print("")
+    print("The Monty Halll problem was first published in 1975 in American Statistician.")
+    print("It was later published in 1990 in Parade Magazine where it garnered a very conroversial reception by readers.")
+    print("The problem is in the form of a fictional game show hosted by Monty Hall.")
+    print("As a contestant on the show, you are given the choice to pick from one of three closed doors.")
+    print("Behind one door, is a brand new shiny car!")
+    print("Each of the other doors contains a very ugly goat.")
+    print("You have no prior information about which door hides the car, so your guess is random.")
+    print("")
+    print("Once you've made your pick, Monty will reveal one of the two remaining doors.")
+    print("Monty will never reveal a car, but only a goat")
+    print("He will then offer you the chance to switch your choice and choose what's behind")
+    print("the door he did not reveal.")
+    print("")
+    print("Do you take Monty up on his offer? Does it improve your odds?")
+    print("This program allows the user to input a number of trials and then simulates the odds")
+    print("of winning a car by sticking with your first choice vs. switching doors")
+    print("")
+
+def number_trials():
+    """
+    This function allows the user to select the number of trials the simulation will run
+    from one to one million
+    It does not allow the user to enter anything that would throw a value error like a null
+    or a string
+    It also will not allow a number less than one or greater than one million to be input
+    """
+    while True:
+        try:
+            trials = int(input("Enter the number of trials to run between ten and one million: "))
+        except ValueError:
+            print("Sorry, I didn't understand that.")
+            continue # go back to asking for input again
+        if trials < 10:
+            print("Sorry, the numbmer of trials must be ten or greater.")
+            continue # go back to asking for input again
+        if trials > 1000000:
+            print("Sorry, the numbmer of trials can't exceed one million.")
+            continue # go back to asking for input again
+        else:
+        #trials was successfully parsed, and we're happy with its value.
+            break
+    return(trials)
+
+def keep_door(trials):
+    """
+    This function simulates playing the game where the conestant always declines to change doors
+    and keeps the first door selected
+    """
+    # initiates counter to captuure the prize won during each simulation
+    won_car = 0
+    won_goat = 0
+
+    for i in range(trials):
+
+        # creates a list for doors 1, 2, and 3
+        doors = random.sample(["goat", "goat", "car"], k=3)
+        # Randomly select game contestent's door
+        random_door = random.randint(0, 2)
+        # captures what was behind the picked door as the prize
+        prize = doors.pop(random_door)
+        if prize == "car":
+            won_car +=1
+        if prize == "goat":
+            won_goat += 1
+    
+    return(won_car, won_goat)
+
+def switch_door(trials):
+    """
+    The key difference in this function is that there is a reveal of one of the doors with a goat
+    and the contestant then switches from the first door picked to the door remaining
+    """
+    # initiates counter to captuure the prize won during each simulation
+    won_car = 0
+    won_goat = 0
+
+    for i in range(trials):
+
+        # creates a list for doors 1, 2, and 3
+        doors = random.sample(["goat", "goat", "car"], k=3)
+        # Randomly select game contestent's door
+        random_door = random.randint(0, 2)
+        # select that dooor and remove it from considerateion
+        prize = doors.pop(random_door)
+        # reveal and remove goat either the only goat or the first if both goats are in consideration set
+        doors.remove("goat")
+        # select the door remaining and replace the first prize
+        prize = doors.pop(0)
+        if prize == "car":
+            won_car +=1
+        if prize == "goat":
+            won_goat += 1
+    
+    return(won_car, won_goat)
+
+def keep_results(kept, trials):
+    print("")
+    print("Simulates contestant always staying with their first door choice")
+    print("")
+    print("Number of cars won: " + str(kept[0]))
+    print("Number of goats won: " + str(kept[1]))
+    print("Car win percentage: " + str(round(((kept[0]/trials) * 100), 1)) + "%")
+    print("")
+    print("")
+
+def switch_results(kept, switched, trials):
+    print("Simulates contestant always switching from their first door choice to what's behind the remaining door")
+    print("")
+    print("Number of cars won: " + str(switched[0]))
+    print("Number of goats won: " + str(switched[1]))
+    print("Car win percentage: " + str(round(((switched[0]/trials) * 100), 1)) + "%")
+    print("")
+    print("")
+    print("The contestant is " + str(round((switched[0]/trials) / (kept[0]/trials), 1)) + " times more likely to win a car by switching")
+    print("")
+
+if __name__ == '__main__':
+    main()
