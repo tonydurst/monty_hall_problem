@@ -27,7 +27,7 @@ def the_problem():
     """
     print("")
     print("The Monty Halll problem was first published in 1975 in American Statistician.")
-    print("It was later published in 1990 in Parade Magazine where it garnered a very conroversial reception by readers.")
+    print("It was later published in 1990 in Parade Magazine where it garnered a very controversial reception by readers.")
     print("The problem is in the form of a fictional game show hosted by Monty Hall.")
     print("As a contestant on the show, you are given the choice to pick from one of three closed doors.")
     print("Behind one door, is a brand new shiny car!")
@@ -59,10 +59,10 @@ def number_trials():
             print("Sorry, I didn't understand that.")
             continue # go back to asking for input again
         if trials < 10:
-            print("Sorry, the numbmer of trials must be ten or greater.")
+            print("Sorry, the number of trials must be ten or greater.")
             continue # go back to asking for input again
         if trials > 1000000:
-            print("Sorry, the numbmer of trials can't exceed one million.")
+            print("Sorry, the number of trials can't exceed one million.")
             continue # go back to asking for input again
         else:
         #trials was successfully parsed, and we're happy with its value.
@@ -71,10 +71,10 @@ def number_trials():
 
 def keep_door(trials):
     """
-    This function simulates playing the game where the conestant always declines to change doors
+    This function simulates playing the game where the contestant always declines to change doors
     and keeps the first door selected
     """
-    # initiates counter to captuure the prize won during each simulation
+    # initiates counter to capture the prize won during each simulation
     won_car = 0
     won_goat = 0
 
@@ -98,7 +98,7 @@ def switch_door(trials):
     The key difference in this function is that there is a reveal of one of the doors with a goat
     and the contestant then switches from the first door picked to the door remaining
     """
-    # initiates counter to captuure the prize won during each simulation
+    # initiates counter to capture the prize won during each simulation
     won_car = 0
     won_goat = 0
 
